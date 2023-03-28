@@ -4,6 +4,8 @@
 
 # TODO: Still need to make it so a file can be searched for within a path for faster searching.
 
+import PySimpleGUI as sg # for GUI interface
+
 import os
 import sys
 import subprocess
@@ -12,7 +14,6 @@ from re import search
 import shutil
 from traceback import TracebackException
 from types import TracebackType
-from alive_progress import alive_bar
 
 def findfile(name, path): 
     for dirpath, dirname, filename in os.walk(path):
@@ -52,11 +53,6 @@ manageFile = input("""What would you like to do with this file? :
 """)
 
 def moveFile():
-    def compute(): # Progress Bar
-        for i in range(1):
-            shutil.move(filepath, folder_dest_path)
-            yield
-
     while True: 
         global filepath
         createFolder = input("Create a new Folder (Y/N) : ").upper()
@@ -76,9 +72,7 @@ def moveFile():
 
             if verify == "YES" or verify == "Y":
                 try:
-                    with alive_bar(1) as bar:
-                        for i in compute():
-                            bar()
+                    break
                             
                 except Exception:
                     print('It seems this File already exists. Please change the file name to something else : ')
