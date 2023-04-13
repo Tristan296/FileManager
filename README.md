@@ -4,22 +4,25 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-Features: 
+*Modules Used:*
+- OS
+- Shutil
+- Subprocess
 
-1. Search:
-- Search through computer
-- specific paths
+*Functions:*
 
-2. Move
-- Move to current folder
-- Create new folder
+## Functions you can perform on files/folders: 
+1. Search through computer or specific paths
+2. Move to existing folder or Create new folder
+3. Directly open files
 
-3. Open file 
-
-TODO: 
+## TODO: 
 Batch rename files with similar names rather than changing each individually. 
 For example:
  
-IMG_1231.JPG ```     -->      ``` IMG_1.JPG
-IMG_1823.JPG ```     -->      ``` IMG_2.JPG
-IMG_1829.JPG ```     -->      ``` IMG_3.JPG
+```
+IMG_1231.JPG --> IMG_1.JPG 
+IMG_1823.JPG --> IMG_2.JPG
+IMG_1829.JPG --> IMG_3.JPG
+etc.
+```
