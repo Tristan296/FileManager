@@ -5,8 +5,8 @@
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 ## Files:
-The GUI.py file is the Graphical Interface version of the File Manager.
-The FileManager.py file is the Command Line version of the File Manager.
+- ```GUI.py``` is the Graphical Interface version.
+- ```FileManager.py``` is the Command Line version.
 
 ## Setup: 
 
