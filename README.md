@@ -4,12 +4,7 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-*Modules Used:*
-- OS
-- Shutil
-- Subprocess
-
-## NOTE:
+## Files:
 The GUI.py file is the Graphical Interface version of the File Manager.
 The FileManager.py file is the Command Line version of the File Manager.
 
