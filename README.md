@@ -15,6 +15,6 @@ TODO:
 Batch rename files with similar names rather than changing each individually. 
 For example:
  
-``` ```IMG_1231.JPG```      -->       ```IMG_1.JPG``` ```
-``` ```IMG_1823.JPG```      -->       ```IMG_2.JPG``` ```
-``` ```IMG_1829.JPG```      -->       ```IMG_3.JPG``` ```
+IMG_1231.JPG ```     -->      ``` IMG_1.JPG
+IMG_1823.JPG ```     -->      ``` IMG_2.JPG
+IMG_1829.JPG ```     -->      ``` IMG_3.JPG
