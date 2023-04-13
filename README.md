@@ -9,6 +9,22 @@
 - Shutil
 - Subprocess
 
+## NOTE:
+The GUI.py file is the Graphical Interface version of the File Manager.
+The FileManager.py file is the Command Line version of the File Manager.
+
+## Setup: 
+
+### CLI File Manager:
+Before using the command line version please install the subprocess by running the following command in python terminal: 
+Windows: ```pip install subprocess```
+MacOS: ```pip3 install subprocess```
+
+### GUI File Manager:
+Before use, please install tkinter please run the following command in the python terminal.
+Windows: ```pip install tk``` 
+MacOS: ```pip3 install tk```
+
 *Functions:*
 
 ## Functions you can perform on files/folders: 
