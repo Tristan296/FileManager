@@ -4,17 +4,21 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-Features: 
+*Modules Used:*
+- OS
+- Shutil
+- Subprocess
 
-1. Search:
+Features: 
+*1. Search:*
 - Search through computer
 - specific paths
 
-2. Move
+*2. Move*
 - Move to current folder
 - Create new folder
 
-3. Open file 
+*3. Open file* 
 
 TODO: 
 Batch rename files with similar names rather than changing each individually. 
