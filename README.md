@@ -10,11 +10,6 @@
 
 ## Setup: 
 
-### CLI File Manager:
-Before using the command line version please install the subprocess by running the following command in python terminal: 
-- Windows: ```pip install subprocess```
-- MacOS: ```pip3 install subprocess```
-
 ### GUI File Manager:
 Before use, please install tkinter please run the following command in the python terminal.
 - Windows: ```pip install tk``` 
