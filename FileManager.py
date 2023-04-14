@@ -12,7 +12,6 @@ def moveFile(foundfile=None):
     if not foundfile:
         return
 
-    global filepath
     while True:
         createFolder = input("Create a new Folder (Y/N) : ").upper()
         print("---" * 30)
@@ -41,7 +40,7 @@ def moveFile(foundfile=None):
 
             if verify == "YES" or verify == "Y" or verify == "y":
                 try:
-                    shutil.move(filepath, folder_dest_path)
+                    shutil.move(foundfile, folder_dest_path)
                     print("File moved successfully!")
                     break
 
