@@ -28,8 +28,6 @@ Before use, please install tkinter please run the following command in the pytho
 #### Theme in Dark Mode:
 <img width="294" alt="Screenshot 2023-04-14 at 10 23 58 am" src="https://user-images.githubusercontent.com/109927879/231910944-57ef605e-4307-43c6-b09f-d56cb82885c4.png">
 
-*Functions:*
-
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
 2. Move to existing folder or Create new folder
