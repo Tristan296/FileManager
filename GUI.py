@@ -7,19 +7,26 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import ttk
+import tkinter as tk
 
 root = Tk()
 root.title("File Manager")
 
+# Define custom styles for buttons, labels, and frames
+style = ttk.Style()
 style = ttk.Style()
 style.configure("TButton",
-                font=('Helvetica', 14),
-                padding=10)
+                foreground="black",  # Set foreground color to white
+                background="blue",  # Set background color to blue
+                font=("Helvetica", 12))  # Set font for the button
+
 style.configure("TLabel",
                 font=('Helvetica', 14),
                 padding=10)
+
 style.configure("TFrame",
-                padding=20)
+                padding=20,
+                background='#E0E0E0')  # Set background color to light gray
 
 def browse_file():
     global filepath
@@ -63,51 +70,54 @@ def open_file():
     else:
         messagebox.showerror("Error", "Please select a file to open.")
 
-def batch_rename():
-    global folderpath
-    if folderpath:
-        pattern = simpledialog.askstring("Batch Rename", "Enter pattern for renaming (use # to represent index):")
-        if pattern:
-            files = os.listdir(folderpath)
-            for i, file in enumerate(files):
-                file_name, file_ext = os.path.splitext(file)
-                new_file_name = pattern.replace("#", str(i+1))
-                new_file_name = new_file_name + file_ext
-                source = os.path.join(folderpath, file)
-                destination = os.path.join(folderpath, new_file_name)
-                if source != destination:
-                    if os.path.exists(destination):
-                        messagebox.showerror("Error", "File already exists in the folder. Please choose a different pattern.")
-                    else:
-                        try:
-                            os.rename(source, destination)
-                        except Exception as e:
-                            messagebox.showerror("Error", "Failed to rename file: " + str(e))
-            messagebox.showinfo("Success", "Batch rename completed successfully!")
-    else:
-        messagebox.showerror("Error", "Please select a folder for batch renaming.")
+# def batch_rename():
+    # global folderpath
+    # if folderpath:
+    #     pattern = simpledialog.askstring("Batch Rename", "Enter pattern for renaming (use # to represent index):")
+    #     if pattern:
+    #         files = os.listdir(folderpath)
+    #         for i, file in enumerate(files):
+    #             file_name, file_ext = os.path.splitext(file)
+    #             new_file_name = pattern.replace("#", str(i+1))
+    #             new_file_name = new_file_name + file_ext
+    #             source = os.path.join(folderpath, file)
+    #             destination = os.path.join(folderpath, new_file_name)
+    #             if source != destination:
+    #                 if os.path.exists(destination):
+    #                     messagebox.showerror("Error", "File already exists in the folder. Please choose a different pattern.")
+    #                 else:
+    #                     try:
+    #                         os.rename(source, destination)
+    #                     except Exception as e:
+    #                         messagebox.showerror("Error", "Failed to rename file: " + str(e))
+    #         messagebox.showinfo("Success", "Batch rename completed successfully!")
+    # else:
+    #     messagebox.showerror("Error", "Please select a folder for batch renaming.")
 
 frame = ttk.Frame(root)
 frame.pack(pady=20)
 
-file_label = ttk.Label(frame, text="Selected File: ")
-file_label.grid(row=0, column=0, sticky=W, padx=10, pady=5)
-folder_label = ttk.Label(frame, text="Selected Folder: ")
-folder_label.grid(row=1, column=0, sticky=W, padx=10, pady=5)
+file_label = ttk.Label(frame, text="Selected File: ", style="TLabel")
+file_label.grid(row=0, column=0, padx=10, pady=10)
 
-browse_file_button = ttk.Button(frame, text="Browse File", command=browse_file)
-browse_file_button.grid(row=0, column=1)
+file_button = ttk.Button(frame, text="Browse File", style="TButton", command=browse_file)
+file_button.grid(row=0, column=1, padx=10, pady=10)
 
-browse_folder_button = ttk.Button(frame, text="Browse Folder", command=browse_folder)
-browse_folder_button.grid(row=1, column=1)
+folder_label = ttk.Label(frame, text="Selected Folder: ", style="TLabel")
+folder_label.grid(row=1, column=0, padx=10, pady=10)
 
-move_button = ttk.Button(frame, text="Move File", command=move_file)
-move_button.grid(row=2, column=0, pady=10)
+folder_button = ttk.Button(frame, text="Browse Folder", style="TButton", command=browse_folder)
+folder_button.grid(row=1, column=1, padx=10, pady=10)
 
-open_button = ttk.Button(frame, text="Open File", command=open_file)
-open_button.grid(row=2, column=1, pady=10)
+move_button = ttk.Button(frame, text="Move File", style="TButton", command=move_file)
+move_button.grid(row=2, column=0, padx=10, pady=10)
 
-batch_rename_button = ttk.Button(frame, text="Batch Rename", command=batch_rename)
-batch_rename_button.grid(row=3, column=0, columnspan=2, pady=10)
+open_button = ttk.Button(frame, text="Open File", style="TButton", command=open_file)
+open_button.grid(row=2, column=1, padx=10, pady=10)
+
+
+# batch_rename_button = ttk.Button(frame, text="Batch Rename", style="TButton", command=batch_rename)
+
+# batch_rename_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
 
 root.mainloop()
