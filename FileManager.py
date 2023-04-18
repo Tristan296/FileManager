@@ -6,28 +6,20 @@ def moveFile(filepath):
     if filepath:
         print("File found at: " + filepath)
         print("---" * 30)
-        choice = input("What do you want to do with the file? (move/open/search) ").lower()
-        if choice == "move":
-            parent_folder = input("What is the parent of this folder: ")
-            folder_name = input("Enter folder name to move file into: ")
-            destination_path = os.path.join(os.path.expanduser("~"), parent_folder, folder_name)
-            print("Destination path: " + destination_path)
-            confirm = input("Are you sure you want to do this? (Y/N): ").lower()
-            if confirm == "y":
-                try:
-                    os.makedirs(destination_path, exist_ok=True)
-                    shutil.move(filepath, os.path.join(destination_path, os.path.basename(filepath)))
-                    print("File moved successfully!")
-                except Exception as e:
-                    print("Error: " + str(e))
-            else:
-                print("File not moved.")
-        elif choice == "open":
-            openFile(filepath)
-        elif choice == "search":
-            pass
+        parent_folder = input("What is the parent of this folder: ")
+        folder_name = input("Enter folder name to move file into: ")
+        destination_path = os.path.join(os.path.expanduser("~"), parent_folder, folder_name)
+        print("Destination path: " + destination_path)
+        confirm = input("Are you sure you want to do this? (Y/N): ").lower()
+        if confirm == "y":
+            try:
+                os.makedirs(destination_path, exist_ok=True)
+                shutil.move(filepath, os.path.join(destination_path, os.path.basename(filepath)))
+                print("File moved successfully!")
+            except Exception as e:
+                print("Error: " + str(e))
         else:
-            print("Invalid choice. Please choose from 'move', 'open', or 'search'.")
+            print("File not moved.")
     else:
         print("File not found.")
 
@@ -85,9 +77,9 @@ def main():
         print("---" * 30)
         
         if choice == "1":
-                filepath = searchComputer()
-                moveFile(filepath)
-                filepath = ""
+            filepath = searchComputer()
+            moveFile(filepath)
+            filepath = ""
 
         elif choice == "2":
             filepath = searchComputer()
@@ -104,7 +96,9 @@ def main():
         else:
             print("Invalid choice. Please choose from 1, 2, 3, or 4.")
             print("---" * 30)
+            
 
-if __name__ == "main":
+
+if __name__ == "__main__":
     main()
 
