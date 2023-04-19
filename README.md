@@ -21,6 +21,5 @@ Before use, please install tkinter please run the following command in the pytho
 
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
-2. Move to existing folder or Create new folder
-3. Directly open files
+2. Directly open files
 
