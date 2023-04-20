@@ -11,7 +11,7 @@
 ## Setup: 
 
 ### GUI File Manager:
-Before use, please install tkinter please run the following command in the python terminal.
+Before use, please install PySimpleGui please run the following command in the python terminal.
 - Windows: ```pip install pysimplegui``` 
 - MacOS: ```pip3 install pysimplegui```
 
