@@ -18,10 +18,12 @@ Before use, please install PySimpleGui please run the following command in the p
 
 ### Screenshots: 
 #### Dark Mode:
-<img width="374" alt="Screenshot 2023-04-24 at 7 20 23 pm" src="https://user-images.githubusercontent.com/109927879/233955216-dee7264d-3ae8-4ddf-ab4d-9d823a63e32b.png">
+<img width="376" alt="Screenshot 2023-04-25 at 8 04 18 am" src="https://user-images.githubusercontent.com/109927879/234126799-f5f45df7-ba3a-462e-b5c4-9b7ef6a88b73.png">
+
 
 #### Light Mode:
-<img width="378" alt="Screenshot 2023-04-24 at 7 21 10 pm" src="https://user-images.githubusercontent.com/109927879/233955244-6aa200ea-2998-4923-b9e4-141f5b56cdc1.png">
+<img width="382" alt="Screenshot 2023-04-25 at 8 04 47 am" src="https://user-images.githubusercontent.com/109927879/234126783-740957e9-64a8-4144-b3de-41467148d89a.png">
+
 
 ## How to Search:
 ### In-path: 
