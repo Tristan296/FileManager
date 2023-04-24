@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import subprocess, os, platform
+import shutil
 import pathlib
 
 class FileSearcher:
@@ -12,6 +13,9 @@ class FileSearcher:
                 if filename == f"{name}.{filetype}":
                     return os.path.join(dirpath, filename)
         return None
+    
+def move_file(filePath, folder_path):
+    shutil.move(filePath, folder_path)
 
 def open_file(findPath):
     if platform.system() == 'Darwin':       # macOS
@@ -25,14 +29,16 @@ sg.theme('SystemDefaultForReal')
 
 file_types = ['exe', 'txt', 'jpg', 'png', 'docx', 'pdf', 'mp4']
 
-layout = [  [sg.Text('File Name:') , sg.InputText(key='-FILENAME-')],
-            [sg.Text('File Type:'), sg.Combo(file_types, size=(20, 6), key='-FILETYPE-'), sg.Button('Browse')],
-            [sg.Button('Search')],
-            [sg.Listbox(values=[], size=(50, 20), key='-FILELIST-')],
-            [sg.Text('Select Function:')],
-            [sg.Button('Open'), sg.Button('Move'), sg.Button('Duplicate'), sg.Button('Delete')],
-            [sg.Button('Cancel')]]
+column_to_be_centered = [
+    [sg.Button('Move File'), sg.Button('Exit')]
+]
 
+layout = [  [sg.Text('File Name:') , sg.InputText(key='-FILENAME-')],
+            [sg.Text('File Type:'), sg.Combo(file_types, size=(20, 6), key='-FILETYPE-'), sg.Button('Browse'), sg.Button('Search')],
+            [sg.VPush()],
+            [sg.VPush(), sg.Column(column_to_be_centered, element_justification='c'), sg.Push()],
+            # [sg.Button('Exit'), ]]
+]
 # Create the Window
 window = sg.Window('FileManager', layout)
 
@@ -66,5 +72,11 @@ while True:
         
         except IndexError:
             sg.popup_error('Please select a file to open.')
-
+    
+    elif event == 'Move File':
+        folder_path = sg.popup_get_folder('Select a folder to move file into')
+        if folder_path:
+            move = move_file(findPath, folder_path)
+            sg.popup_ok(f'Your File has been moved succesfully from {findPath} to {folder_path}!')
+            
 window.close()
