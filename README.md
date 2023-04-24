@@ -27,14 +27,13 @@ Before use, please install PySimpleGui please run the following command in the p
 ### In-path: 
 1. Type the file name and its extension
 2. Press the Browse button (a new window should appear)
-3. To choose the folder to search in either:
-  - Type the Parent name of the folder. e.g. 'Desktop'
-  - Press the Browse button. This will open a finder/explorer window where the folder can be selected (retrieving the folder's path)
-4. Press Search
+3. Select the folder to be searched in
+4. Press OK to go back to the main window
+5. Press Search
 
-### Entire Computer:
+### Entire Computer (Please note this process takes a while):
 1. Type File name and extension 
-2. Press Search
+2. Press Search 
   
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
