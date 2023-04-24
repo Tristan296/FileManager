@@ -23,3 +23,5 @@ Before use, please install PySimpleGui please run the following command in the p
 1. Search through computer or specific paths
 2. Directly open files
 
+## NOTE:
+The delete and duplicate functions are not yet operational
