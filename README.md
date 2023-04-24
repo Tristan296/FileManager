@@ -10,15 +10,32 @@
 
 ## Setup: 
 
+
 ### GUI File Manager:
 Before use, please install PySimpleGui please run the following command in the python terminal.
 - Windows: ```pip install pysimplegui``` 
 - MacOS: ```pip3 install pysimplegui```
 
 ### Screenshots: 
-<img width="414" alt="Screenshot 2023-04-20 at 9 08 58 am" src="https://user-images.githubusercontent.com/109927879/233218666-91fa8cd0-fab9-43df-8f4c-dc8acb6b568a.png">
+#### Dark Mode:
+<img width="374" alt="Screenshot 2023-04-24 at 7 20 23 pm" src="https://user-images.githubusercontent.com/109927879/233955216-dee7264d-3ae8-4ddf-ab4d-9d823a63e32b.png">
 
+#### Light Mode:
+<img width="378" alt="Screenshot 2023-04-24 at 7 21 10 pm" src="https://user-images.githubusercontent.com/109927879/233955244-6aa200ea-2998-4923-b9e4-141f5b56cdc1.png">
 
+## How to Search:
+### In-path: 
+1. Type the file name and its extension
+2. Press the Browse button (a new window should appear)
+3. To choose the folder to search in either:
+  - Type the Parent name of the folder. e.g. 'Desktop'
+  - Press the Browse button. This will open a finder/explorer window where the folder can be selected (retrieving the folder's path)
+4. Press Search
+
+### Entire Computer:
+1. Type File name and extension 
+2. Press Search
+  
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
 2. Directly open files
