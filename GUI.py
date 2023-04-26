@@ -30,7 +30,7 @@ sg.theme('SystemDefaultForReal')
 file_types = ['exe', 'txt', 'jpg', 'png', 'docx', 'pdf', 'mp4']
 
 column_to_be_centered = [
-    [sg.Button('Move File'), sg.Button('Exit')]
+    [sg.Button('Move File'), sg.Button('Open'), sg.Button('Exit')]
 ]
 
 layout = [  [sg.Text('File Name:') , sg.InputText(key='-FILENAME-')],
@@ -66,7 +66,7 @@ while True:
             searcher = FileSearcher(folder_path)
 
     elif event == 'Open': 
-        selected_file = values['-FILELIST-'][0]
+        selected_file = findPath
         try: 
             open_file(selected_file)
         
@@ -79,4 +79,7 @@ while True:
             move = move_file(findPath, folder_path)
             sg.popup_ok(f'Your File has been moved succesfully from {findPath} to {folder_path}!')
             
+    elif event == 'Exit':
+        window.close()
+        
 window.close()
