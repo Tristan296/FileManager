@@ -28,7 +28,7 @@ def open_file(findPath):
     else:                                   # linux variants
         subprocess.call(('xdg-open', findPath))
 
-sg.theme('SystemDefaultForReal')
+sg.theme('')
 
 file_types = ['exe', 'txt', 'jpg', 'png', 'docx', 'pdf', 'mp4']
 
