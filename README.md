@@ -34,6 +34,6 @@ Before use, please install PySimpleGui please run the following command in the p
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
 2. Directly open files
-
+3. Move files into folders
 ## NOTE:
 The delete and duplicate functions are not yet operational
