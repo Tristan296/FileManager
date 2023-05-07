@@ -1,8 +1,5 @@
 # FileManager
-
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+<img width="660" alt="Screenshot 2023-05-07 at 5 12 07 pm" src="https://user-images.githubusercontent.com/109927879/236663348-265c35ad-3d36-4498-b628-ac75e079c824.png">
 
 ## Files:
 - ```GUI.py``` is the Graphical Interface version.
@@ -12,9 +9,9 @@
 
 
 ### GUI File Manager:
-Before use, please install PySimpleGui please run the following command in the python terminal.
-- Windows: ```pip install pysimplegui``` 
-- MacOS: ```pip3 install pysimplegui```
+Before use, please install PyQt5 please run the following command in the python terminal.
+- Windows: ```pip install pyqt5``` 
+- MacOS: ```pip3 install pyqt5```
 
 ### Screenshots: 
 <img width="539" alt="Screenshot 2023-05-03 at 6 56 05 pm" src="https://user-images.githubusercontent.com/109927879/235872906-3029c23a-a9bc-477c-a8d0-301ec2db358b.png">
