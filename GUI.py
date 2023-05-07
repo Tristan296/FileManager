@@ -1,5 +1,17 @@
-import PySimpleGUI as sg
-import subprocess, os, platform
+import sys
+import os
+from PyQt5.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+    QMessageBox,
+    QComboBox,
+)
+import subprocess
+import platform
 import shutil
 import pathlib
 
@@ -10,13 +22,17 @@ class FileSearcher:
     def search_file(self, name, filetype):
         for dirpath, dirname, filenames in os.walk(self.root_path):
             for filename in filenames:
-                if filename == f"{name}.{filetype}":
+                if filename == f"{name}":
                     return os.path.join(dirpath, filename)
         return None
 
     def list_files(self):
         return os.listdir(self.root_path)
-    
+
+    def get_user_name(self):
+        return getpass.getuser()
+
+
 def move_file(filePath, folder_path):
     shutil.move(filePath, folder_path)
 
@@ -28,70 +44,83 @@ def open_file(findPath):
     else:                                   # linux variants
         subprocess.call(('xdg-open', findPath))
 
-sg.theme('DarkGreen4')
 
-file_types = ['exe', 'txt', 'jpg', 'png', 'docx', 'pdf', 'mp4']
+class FileDialog(QFileDialog):
+    def __init__(self):
+        super().__init__()
+        self.setOption(QFileDialog.DontUseNativeDialog, True)
+        self.setFileMode(QFileDialog.ExistingFiles)
+        self.searcher = FileSearcher("/")  # Create a FileSearcher object with root path '/'
+        self.selected_files = []
 
-column_to_be_centered = [
-    [sg.Button('Move File'), sg.Button('Open'), sg.Button('Exit')]
-]
+        layout = self.layout()
 
-layout = [  [sg.Text('File Name:') , sg.InputText(key='-FILENAME-')],
-            [sg.Text('File Type:'), sg.Combo(file_types, size=(20, 6), key='-FILETYPE-'), sg.Button('Browse'), sg.Button('Search')],
-            [sg.Listbox([], size=(80, 20), key='-LISTBOX-')],
-            [sg.VPush()],
-            [sg.VPush(), sg.Column(column_to_be_centered, element_justification='c')],
-]
-# Create the Window
-window = sg.Window('FileManager', layout)
+        # Add widgets for file searching and manipulation
+        self.filename_input = QLineEdit()
+        layout.addWidget(self.filename_input)
 
-# Create a FileSearcher object with root path '/'
-searcher = FileSearcher("/")
+        self.filetype_combo = QLineEdit()
+        layout.addWidget(self.filetype_combo)
 
-# Event Loop to process "events" and get the "values" of the inputs
-while True:
-    event, values = window.read()
-    filename = values['-FILENAME-']
-    filetype = values['-FILETYPE-']
-    findPath = searcher.search_file(filename, filetype)
-    if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
-        break
-    # if the 'Computer' Button is pressed.
-    
-    elif event == 'Search': 
-        file_list = searcher.list_files()
-        if file_list:
-            window['-LISTBOX-'].update(file_list)
-        else:
-            sg.popup("No files found in the selected directory.")
-    elif event == 'Open': 
-        if findPath is None:
-            sg.popup_error('Please select a file to open.')
-        else:
-            try: 
-                open_file(findPath)
-            
-            except IndexError:
-                sg.popup_error('Please select a file to open.')
-    elif event == 'Browse':
-        folder_path = sg.popup_get_folder('Select a folder to search in')
-        if folder_path:
-            searcher = FileSearcher(folder_path)
+        browse_button = QPushButton("Browse")
+        browse_button.clicked.connect(self.browse)
+        layout.addWidget(browse_button)
 
-    elif event == 'Search': 
-        file_list = searcher.list_files()
-        if file_list:
-            window['-LISTBOX-'].update(file_list)
-        else:
-            sg.popup("No files found in the selected directory.")
-    
-    elif event == 'Move File':
-        folder_path = sg.popup_get_folder('Select a folder to move file into')
-        if folder_path:
-            move = move_file(findPath, folder_path)
-            sg.popup_ok(f'Your File has been moved succesfully from {findPath} to {folder_path}!')
-            
-    elif event == 'Exit':
-        window.close()
+        search_button = QPushButton("Search")
+        search_button.clicked.connect(self.search)
+        layout.addWidget(search_button)
+
+        move_button = QPushButton("Move File")
+        move_button.clicked.connect(self.move)
+        layout.addWidget(move_button)
+
+        open_button = QPushButton("Open")
+        open_button.clicked.connect(self.open)
+        layout.addWidget(open_button)
+
+        exit_button = QPushButton("Exit")
+        exit_button.clicked.connect(self.close)
+        layout.addWidget(exit_button)
         
-window.close()
+
+    def browse(self):
+        folder_path = QFileDialog.getExistingDirectory()
+        if folder_path:
+            self.searcher = FileSearcher(folder_path)
+
+    def search(self):
+        filename = self.filename_input.text()
+        filetype = self.filetype_combo.text()
+        file_list = self.searcher.list_files()
+        filtered_files = [
+            f for f in file_list if f.endswith(filetype) and filename in f
+        ]
+        if filtered_files:
+            self.selectFile(os.path.join(self.searcher.root_path, filtered_files[0]))
+        else:
+            QMessageBox.warning(self, "Warning", "No files found in the selected directory.")
+
+    def move(self):
+        if self.selectedFiles():
+            folder_path = QFileDialog.getExistingDirectory()
+            if folder_path:
+                for file_path in self.selectedFiles():
+                    move_file(file_path, folder_path)
+                    QMessageBox.information(
+                        self,
+                        "Information",
+                        f"Your File has been moved succesfully from {file_path} to {folder_path}!",
+                    )
+                self.selected_files.clear()
+        else:
+            QMessageBox.warning(
+                self, 
+                "Warning"
+                "No files selected.",
+            )
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    dialog = FileDialog()
+    if dialog.exec_() == QFileDialog.Accepted:
+        print(dialog.selectedFiles())
+    sys.exit(app.exec_())
