@@ -29,10 +29,6 @@ class FileSearcher:
     def list_files(self):
         return os.listdir(self.root_path)
 
-    def get_user_name(self):
-        return getpass.getuser()
-
-
 def move_file(filePath, folder_path):
     shutil.move(filePath, folder_path)
 
@@ -56,23 +52,9 @@ class FileDialog(QFileDialog):
         layout = self.layout()
 
         # Add widgets for file searching and manipulation
-        self.filename_input = QLineEdit()
-        layout.addWidget(self.filename_input)
-
-        self.filetype_combo = QLineEdit()
-        layout.addWidget(self.filetype_combo)
-
         browse_button = QPushButton("Browse")
         browse_button.clicked.connect(self.browse)
         layout.addWidget(browse_button)
-
-        search_button = QPushButton("Search")
-        search_button.clicked.connect(self.search)
-        layout.addWidget(search_button)
-
-        move_button = QPushButton("Move File")
-        move_button.clicked.connect(self.move)
-        layout.addWidget(move_button)
 
         open_button = QPushButton("Open")
         open_button.clicked.connect(self.open)
@@ -87,37 +69,8 @@ class FileDialog(QFileDialog):
         folder_path = QFileDialog.getExistingDirectory()
         if folder_path:
             self.searcher = FileSearcher(folder_path)
-
-    def search(self):
-        filename = self.filename_input.text()
-        filetype = self.filetype_combo.text()
-        file_list = self.searcher.list_files()
-        filtered_files = [
-            f for f in file_list if f.endswith(filetype) and filename in f
-        ]
-        if filtered_files:
-            self.selectFile(os.path.join(self.searcher.root_path, filtered_files[0]))
-        else:
-            QMessageBox.warning(self, "Warning", "No files found in the selected directory.")
-
-    def move(self):
-        if self.selectedFiles():
-            folder_path = QFileDialog.getExistingDirectory()
-            if folder_path:
-                for file_path in self.selectedFiles():
-                    move_file(file_path, folder_path)
-                    QMessageBox.information(
-                        self,
-                        "Information",
-                        f"Your File has been moved succesfully from {file_path} to {folder_path}!",
-                    )
-                self.selected_files.clear()
-        else:
-            QMessageBox.warning(
-                self, 
-                "Warning"
-                "No files selected.",
-            )
+            
+            
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     dialog = FileDialog()
