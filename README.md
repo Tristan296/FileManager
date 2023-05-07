@@ -12,22 +12,13 @@
 Before use, please install PyQt5 please run the following command in the python terminal.
 - Windows: ```pip install pyqt5``` 
 - MacOS: ```pip3 install pyqt5```
-
-## How to Search:
-### In-path: 
-1. Type the file name and its extension
-2. Press the Browse button (a new window should appear)
-3. Select the folder to be searched in
-4. Press OK to go back to the main window
-5. Press Search
-
-### Entire Computer (Please note this process takes a while):
-1. Type File name and extension 
-2. Press Search 
   
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
 2. Directly open files
 3. Move files into folders
-## NOTE:
-The delete and duplicate functions are not yet operational
+4. Rename files
+5. Select multiple files
+6. Copy files
+7. Delete Files
+8. Create new folders
