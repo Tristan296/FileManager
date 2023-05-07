@@ -13,9 +13,6 @@ Before use, please install PyQt5 please run the following command in the python 
 - Windows: ```pip install pyqt5``` 
 - MacOS: ```pip3 install pyqt5```
 
-### Screenshots: 
-<img width="539" alt="Screenshot 2023-05-03 at 6 56 05 pm" src="https://user-images.githubusercontent.com/109927879/235872906-3029c23a-a9bc-477c-a8d0-301ec2db358b.png">
-
 ## How to Search:
 ### In-path: 
 1. Type the file name and its extension
