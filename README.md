@@ -10,8 +10,8 @@
 
 ### GUI File Manager:
 Before use, please install PyQt5 please run the following command in the python terminal.
-- Windows: ```pip install pyqt5``` 
-- MacOS: ```pip3 install pyqt5```
+- Windows: ```pip install pyqt5 zipfile bz2 subprocess``` 
+- MacOS: ```sudo pip3 install pyqt5 zipfile bz2 subprocess```
   
 ## Functions you can perform on files/folders: 
 1. Search through computer or specific paths
