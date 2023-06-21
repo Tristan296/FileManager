@@ -1,5 +1,5 @@
 # FileManager
-![image](https://github.com/Tristan296/FileManager/assets/109927879/dcdf0a0e-f09c-439b-8d27-c15b71df8044)
+<img width="903" alt="image" src="https://github.com/Tristan296/FileManager/assets/109927879/ff3bdf54-7fbd-4a49-8c73-eb4311e9bdb3">
 
 
 ## Files:
@@ -7,7 +7,6 @@
 - ```FileManager.py``` is the Command Line version.
 
 ## Setup: 
-
 
 ### GUI File Manager:
 Before use, please install PyQt5 please run the following command in the python terminal.
