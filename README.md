@@ -1,5 +1,6 @@
 # FileManager
-<img width="923" alt="image" src="https://github.com/Tristan296/FileManager/assets/109927879/c1e7b49b-2c66-4a09-a34b-7c0622de0bb3">
+<img width="907" alt="image" src="https://github.com/Tristan296/FileManager/assets/109927879/0ac3f376-37c2-44ad-9454-0a4d7c495ffb">
+
 
 
 ## Files:
