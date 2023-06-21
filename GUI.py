@@ -3,13 +3,14 @@ import os
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QMimeData, QUrl
 import subprocess
 import platform
 import shutil
 from pathlib import Path
 import bz2
 import zipfile
+from zipfile import ZipFile
 
 class FileSearcher:
     def __init__(self, root_path):
@@ -59,7 +60,7 @@ class FileDialog(QFileDialog):
 
         set_layout = QHBoxLayout()  # set of layouts
 
-        group_boxF = QGroupBox("File Browser")
+        group_boxF = QGroupBox("File Manager")
         main_layout = self.layout()
         group_boxF.setLayout(main_layout)
 
@@ -67,16 +68,26 @@ class FileDialog(QFileDialog):
         group_boxG.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         button_layout = QVBoxLayout()
         
-        compressBz2 = QPushButton("Compress to BZ2")
-        compressBz2.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        compressBz2.clicked.connect(self.compress_files_bz2)
-        button_layout.addWidget(compressBz2)
+        compress_bz2_button = QPushButton("Compress to BZ2")
+        compress_bz2_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        compress_bz2_button.clicked.connect(self.compress_files_bz2)
+        button_layout.addWidget(compress_bz2_button)
         
-        compressZip = QPushButton("Compress to ZIP")
-        compressZip.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        compressZip.clicked.connect(self.compress_files_zip)
-        button_layout.addWidget(compressZip)        
+        compress_zip_button = QPushButton("Compress to ZIP")
+        compress_zip_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        compress_zip_button.clicked.connect(self.compress_files_zip)
+        button_layout.addWidget(compress_zip_button)        
+        
+        unzip_button = QPushButton("unzip")
+        unzip_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        unzip_button.clicked.connect(self.unzip_files)
+        button_layout.addWidget(unzip_button)
 
+        duplicate_file_button = QPushButton("Duplicate")
+        duplicate_file_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        duplicate_file_button.clicked.connect(self.duplicate_file)
+        button_layout.addWidget(duplicate_file_button)
+    
         exit_button = QPushButton("Exit")
         exit_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         exit_button.clicked.connect(self.close)
@@ -104,36 +115,33 @@ class FileDialog(QFileDialog):
         FileDialog.selected_files = dir
 
 
-    def create_new_file(self):  # create file
-        try:
-            new_file_name, ok = QInputDialog.getText(self, 'New File', 'Enter name for new file:')  
-            while ok and not new_file_name.strip():  # 파일 이름이 없는 경우를 처리
-                QMessageBox.warning(self, "Invalid File Name", "File name cannot be empty. Please enter again.")
-                new_file_name, ok = QInputDialog.getText(self, 'New File', 'Enter name for new file:')
-            if ok:
-                file_path = FileDialog.selected_files[0]
-                file_location, file_name = os.path.split(file_path)
-
-                new_file_path = os.path.join(file_location, new_file_name)
-
-                uniq = 1
-                while os.path.exists(new_file_path): 
-                    new_file_path = os.path.join(file_location, new_file_name + "(" + str(uniq) + ")")
-                    uniq += 1
-                if uniq > 1:
-                    new_file_name += "(%d)" % (uniq - 1) 
-                open(new_file_path, 'w').close() 
-                QMessageBox.information(self, "Create New File", f"New file created: {new_file_name} in {new_file_path}")
-        except:
-            QMessageBox.warning(self, "Error", "Empty File Directory.\nSelect File First")
-    
     def compress_files_zip(self): 
         for file_path in self.selectedFiles():
             if file_path:
                 archive = f"{Path(file_path).stem}.zip"
                 with zipfile.ZipFile(archive, "w") as zf:
                     zf.write(file_path)
-                    shutil.move(archive, f'{Path.cwd()}/misc/zip/')
+                    shutil.move(archive, f'{Path.cwd()}/misc/archived/ZIP/')
+    
+    def unzip_files(self): 
+        for file_path in self.selectedFiles():
+            if file_path:
+                file_extension = Path(file_path).suffix
+
+                if file_extension == '.zip':
+                    with zipfile.ZipFile(file_path, 'r') as archive:
+                        archive.extractall(f'{Path.cwd()}/misc/unarchived/ZIP/')
+                    print("ZIP file unzipped successfully.")
+                elif file_extension == '.bz2':
+                    output_file = f'{Path.cwd()}/misc/unarchived/BZ2/{Path(file_path).stem}'
+                    with open(output_file, 'wb') as output:
+                        with bz2.BZ2File(file_path, 'rb') as archive:
+                            shutil.copyfileobj(archive, output)
+                    print("BZ2 file unzipped successfully.")
+                else:
+                    print("Unsupported file format.")
+            else:
+                print("No file selected.")
 
     def compress_files_bz2(self):
         for file_path in self.selectedFiles():
@@ -142,11 +150,30 @@ class FileDialog(QFileDialog):
                 with open(file_path, "rb") as file_in:
                     with bz2.BZ2File(compressed_filepath, "wb") as file_out:
                         shutil.copyfileobj(file_in, file_out)
-                        shutil.move(compressed_filepath, f'{Path.cwd()}/misc/bz2/')
+                        shutil.move(compressed_filepath, f'{Path.cwd()}/misc/archived/BZ2/')
                 print("File compressed successfully.")
             else: 
                 print("File failed to compress.")
                 
+    def duplicate_file(self):
+        for file_path in self.selectedFiles():
+            if file_path:
+                file_name = os.path.basename(file_path)
+                file_directory = os.path.dirname(file_path)
+                duplicate_path = os.path.join(file_directory, f"Copy of {file_name}")
+
+                try:
+                    shutil.copy2(file_path, duplicate_path)
+                    print(f"File '{file_name}' duplicated successfully.")
+                except FileNotFoundError:
+                    print(f"The file '{file_name}' does not exist.")
+                except PermissionError:
+                    print(f"Permission denied. Unable to duplicate the file '{file_name}'.")
+                except Exception as e:
+                    print(f"An error occurred while duplicating the file '{file_name}': {str(e)}")
+            else:
+                print("No file selected.")
+
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
