@@ -1,5 +1,6 @@
 # FileManager
-<img width="907" alt="image" src="https://github.com/Tristan296/FileManager/assets/109927879/cf77bf48-de0c-4175-ad8a-cdef38a3c8ff">
+![image](https://github.com/Tristan296/FileManager/assets/109927879/dcdf0a0e-f09c-439b-8d27-c15b71df8044)
+
 
 ## Files:
 - ```GUI.py``` is the Graphical Interface version.
