@@ -1,5 +1,6 @@
 import sys
 import os
+from urllib.parse import urlparse
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -11,6 +12,7 @@ from pathlib import Path
 import bz2
 import zipfile
 from zipfile import ZipFile
+from datetime import datetime
 
 class FileSearcher:
     def __init__(self, root_path):
@@ -39,9 +41,35 @@ def open_file(findPath):
     else:  # linux variants
         subprocess.call(('xdg-open', findPath))
 
-class FileDialog(QFileDialog):
-    selected_files = []
+class ShareDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Share")
+        self.setFixedSize(300, 200)
 
+        layout = QVBoxLayout()
+
+        google_drive_button = QPushButton("Share with Google Drive")
+        google_drive_button.setIcon(QIcon("path/to/google_drive_icon.png"))  # Replace "path/to/google_drive_icon.png" with the actual path to the Google Drive icon file
+        google_drive_button.clicked.connect(self.share_with_google_drive)
+        layout.addWidget(google_drive_button)
+
+        dropbox_button = QPushButton("Share with Dropbox")
+        dropbox_button.setIcon(QIcon("path/to/dropbox_icon.png"))  # Replace "path/to/dropbox_icon.png" with the actual path to the Dropbox icon file
+        dropbox_button.clicked.connect(self.share_with_dropbox)
+        layout.addWidget(dropbox_button)
+
+        self.setLayout(layout)
+
+    def share_with_google_drive(self):
+        # Implement the functionality to share with Google Drive
+        print("Sharing with Google Drive")
+
+    def share_with_dropbox(self):
+        # Implement the functionality to share with Dropbox
+        print("Sharing with Dropbox")
+
+class FileDialog(QFileDialog):
     def __init__(self):
         super().__init__()
         self.setOption(QFileDialog.DontUseNativeDialog, True)
@@ -78,7 +106,7 @@ class FileDialog(QFileDialog):
         compress_zip_button.clicked.connect(self.compress_files_zip)
         button_layout.addWidget(compress_zip_button)        
         
-        unzip_button = QPushButton("unzip")
+        unzip_button = QPushButton("Unzip")
         unzip_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         unzip_button.clicked.connect(self.unzip_files)
         button_layout.addWidget(unzip_button)
@@ -88,6 +116,16 @@ class FileDialog(QFileDialog):
         duplicate_file_button.clicked.connect(self.duplicate_file)
         button_layout.addWidget(duplicate_file_button)
     
+        file_details_button = QPushButton("File Details")
+        file_details_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        file_details_button.clicked.connect(self.get_fileinfo)
+        button_layout.addWidget(file_details_button)
+        
+        share_button = QPushButton("Share")
+        share_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        share_button.clicked.connect(self.show_share_dialog)
+        button_layout.addWidget(share_button)
+        
         exit_button = QPushButton("Exit")
         exit_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         exit_button.clicked.connect(self.close)
@@ -114,6 +152,20 @@ class FileDialog(QFileDialog):
     def path(self, dir):
         FileDialog.selected_files = dir
 
+    def get_fileinfo(self):
+        for file_path in self.selectedFiles():
+            if file_path:
+                filesize = os.path.getsize(file_path)
+                lastmodifieddate =  datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y-%m-%d %H:%M:%S')
+                creationdate = datetime.fromtimestamp(os.path.getctime(file_path)).strftime('%Y-%m-%d %H:%M:%S')
+               
+                msgBox = QMessageBox()
+                msgBox.setIcon(QMessageBox.Information)
+                msgBox.setWindowTitle("File Details")
+                msgBox.setText(f"File: {file_path}")
+                msgBox.setInformativeText(f"Size: {filesize} bytes\nLast Modified: {lastmodifieddate}\nCreated: {creationdate}")
+                msgBox.setStandardButtons(QMessageBox.Ok)
+                msgBox.exec_()
 
     def compress_files_zip(self): 
         for file_path in self.selectedFiles():
@@ -174,7 +226,12 @@ class FileDialog(QFileDialog):
             else:
                 print("No file selected.")
 
-    
+    def show_share_dialog(self):
+        for file_path in self.selectedFiles():
+            if file_path:
+                dialog = ShareDialog()
+                dialog.exec_()
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     dialog = FileDialog()
