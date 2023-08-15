@@ -23,7 +23,9 @@ Before use, please install PyQt5 please run the following command in the python 
 7. Delete Files
 8. Create new folders
 9. Compress both files and folders to ZIP or BZ2 formats
-
+10. Batch rename multiple files with naming pattern
+11. Get File details (path, size, last modified data and creation date)
+    
 ## Troubleshooting (MacOS):
 ### PyQt5 didn't install properly:
 ```
