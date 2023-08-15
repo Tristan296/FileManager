@@ -111,6 +111,11 @@ class FileDialog(QFileDialog):
         unzip_button.clicked.connect(self.unzip_files)
         button_layout.addWidget(unzip_button)
 
+        batch_rename = QPushButton("Batch Rename")
+        batch_rename.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        batch_rename.clicked.connect(self.batch_rename)
+        button_layout.addWidget(batch_rename)
+
         duplicate_file_button = QPushButton("Duplicate")
         duplicate_file_button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         duplicate_file_button.clicked.connect(self.duplicate_file)
@@ -207,6 +212,32 @@ class FileDialog(QFileDialog):
             else: 
                 print("File failed to compress.")
                 
+    def batch_rename(self):
+        new_name, ok = QInputDialog.getText(self, "Batch Rename", "Enter new name:")
+        if not ok:
+            return
+
+        count = 1
+        for file_path in self.selectedFiles():
+            if file_path:
+                file_extension = Path(file_path).suffix
+                new_file_name = f"{new_name}_{count}{file_extension}"
+                new_path = os.path.join(os.path.dirname(file_path), new_file_name)
+
+                try:
+                    os.rename(file_path, new_path)
+                    print(f"File '{os.path.basename(file_path)}' renamed to '{new_file_name}' successfully.")
+                    count += 1
+                except FileNotFoundError:
+                    print(f"The file '{os.path.basename(file_path)}' does not exist.")
+                except PermissionError:
+                    print(f"Permission denied. Unable to rename the file '{os.path.basename(file_path)}'.")
+                except Exception as e:
+                    print(f"An error occurred while renaming the file '{os.path.basename(file_path)}': {str(e)}")
+            else:
+                print("No file selected.")
+
+
     def duplicate_file(self):
         for file_path in self.selectedFiles():
             if file_path:
